@@ -1,8 +1,3 @@
-
-variable "environment"{
-   type = "string"
-  }
-
 resource "aws_dynamodb_table" "basic-dynamodb-table" {
   name           = "${var.org}-${var.environment}-GameScores"
   billing_mode   = "PROVISIONED"
