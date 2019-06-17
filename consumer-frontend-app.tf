@@ -8,29 +8,10 @@
 # 5) Modify variables as needed
 # 6) rename file from consumer-frontend-app.nothing to  consumer-frontend-app.tf
 
-variable "number_of_instances" {
-  description = "Number of instances to create and attach to Consumer ELB"
-  default     = 2
-}
-
-variable "name" {
-  description = "The name of the app deployed"
-  default = "Consumer-App"
-}
-
-module "elb" {
-  source  = "app.terraform.io/justinlinn/consumer-elb/aws"
+module "consumer_ec2_instance" {
+  source  = "app.terraform.io/justinlinn/consumer-ec2-instance/aws"
   version = "1.0"
-  name = "${var.name}-elb"
-  
-  # ELB attachments
-  number_of_instances = "${var.number_of_instances}"
-  instances           = ["${module.ec2_instances.id}"]
-}
-  
-module "ec2_instances" {
-  source = "app.terraform.io/justinlinn/consumer-ec2-instance/aws"
-  version = "1.0"
-  name                        = "${var.name}-ec2"
-  instance_count = "${var.number_of_instances}"
+
+  instance_count = 2
+  name = "dev"
 }
